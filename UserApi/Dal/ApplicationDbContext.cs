@@ -20,7 +20,12 @@ public class ApplicationDbContext : DbContext
         {
             entity.ToTable("users");
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("gen_random_uuid()")
+                .HasColumnType("uuid");
+            
+            //TODO: прописать настройки для полей
         });
     }
 }
