@@ -2,5 +2,5 @@
 
 public class BaseEntityDal<T>
 {
-    public T Id { get; init; }
+    public required T Id { get; init; }
 }
