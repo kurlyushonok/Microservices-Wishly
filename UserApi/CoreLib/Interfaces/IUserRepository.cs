@@ -30,14 +30,14 @@ public interface IUserRepository
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<User> GetByIdAsync(Guid id);
+    Task<User?> GetByIdAsync(Guid id);
     
     /// <summary>
     /// Получение данных о пользователе по его имени
     /// </summary>
     /// <param name="username"></param>
     /// <returns></returns>
-    Task<User> GetByUsernameAsync(string username);
+    Task<User?> GetByUsernameAsync(string username);
     
     /// <summary>
     /// Проверка существования пользователя в базе данных с данным именем

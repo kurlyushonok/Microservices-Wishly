@@ -1,37 +1,60 @@
 ﻿using CoreLib.Entities;
 using CoreLib.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dal.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    public Task AddAsync(User user)
+    private readonly ApplicationDbContext _context;
+
+    public UserRepository(ApplicationDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task UpdateAsync(User user)
+    public async Task AddAsync(User user)
     {
-        throw new NotImplementedException();
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task UpdateAsync(User user)
     {
-        throw new NotImplementedException();
+        var existingUser = await _context.Users.FindAsync(user.Id);
+        if (existingUser != null)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task<User> GetByIdAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var user = await _context.Users.FindAsync(id);
+        if (user != null)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task<User> GetByUsernameAsync(string username)
+    public async Task<User?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Users.FindAsync(id);
     }
 
-    public Task<bool> ExistsUsernameAsync(string username)
+    public async Task<User?> GetByUsernameAsync(string username)
     {
-        throw new NotImplementedException();
+        return await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Username == username);
+    }
+
+    public async Task<bool> ExistsUsernameAsync(string username)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .AnyAsync(u => u.Username == username);
     }
 }

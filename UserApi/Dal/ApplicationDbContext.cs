@@ -10,7 +10,7 @@ public class ApplicationDbContext : DbContext
     {
     }
     
-    public DbSet<User> Users => Set<User>();
+    public DbSet<User?> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,7 +25,12 @@ public class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("gen_random_uuid()")
                 .HasColumnType("uuid");
             
-            //TODO: прописать настройки для полей
+            entity.Property(e => e.Username)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.PasswordHash)
+                .IsRequired();
         });
     }
 }
