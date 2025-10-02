@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\CoreLib\CoreLib.csproj" />
       <ProjectReference Include="..\Dal\Dal.csproj" />
+      <ProjectReference Include="..\Logic\Logic.csproj" />
     </ItemGroup>
 
     <ItemGroup>
