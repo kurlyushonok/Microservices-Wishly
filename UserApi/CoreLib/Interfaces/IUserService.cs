@@ -23,14 +23,14 @@ public interface IUserService
     /// </summary>
     /// <param name="username"></param>
     /// <returns></returns>
-    Task<UserResponseDto?> GetByUsernameAsync(string username);
+    Task<UserResponseDto> GetByUsernameAsync(string username);
     
     /// <summary>
     /// Получение информации о пользователе по его id
     /// </summary>
     /// <param name="username"></param>
     /// <returns></returns>
-    Task<UserResponseDto?> GetByIdAsync(string username);
+    Task<UserResponseDto> GetByIdAsync(Guid id);
     
     /// <summary>
     /// Обновление информации о пользователе
@@ -38,7 +38,7 @@ public interface IUserService
     /// <param name="id"></param>
     /// <param name="updateDto"></param>
     /// <returns></returns>
-    Task<UserResponseDto?> UpdateAsync(Guid id, UserUpdateDto updateDto);
+    Task<UserResponseDto> UpdateAsync(Guid id, UserUpdateDto updateDto);
     
     /// <summary>
     /// Удаление пользователя
