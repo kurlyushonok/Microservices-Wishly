@@ -21,9 +21,7 @@ public class ApplicationDbContext : DbContext
             entity.ToTable("users");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasDefaultValueSql("gen_random_uuid()")
-                .HasColumnType("uuid");
+                .IsRequired();
             
             entity.Property(e => e.Username)
                 .IsRequired()
