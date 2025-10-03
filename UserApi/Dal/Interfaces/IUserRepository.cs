@@ -1,6 +1,7 @@
 ﻿using CoreLib.Entities;
+using Dal.Entities;
 
-namespace CoreLib.Interfaces;
+namespace Dal.Interfaces;
 
 public interface IUserRepository
 {

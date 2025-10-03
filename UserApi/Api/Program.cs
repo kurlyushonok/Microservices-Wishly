@@ -1,6 +1,4 @@
-using CoreLib.Interfaces;
 using Dal;
-using Dal.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,6 @@
-﻿using CoreLib.DTO;
+﻿using Dal.DTO;
 
-namespace CoreLib.Interfaces;
+namespace Logic.Interfaces;
 
 public interface IUserService
 {

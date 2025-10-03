@@ -1,4 +1,4 @@
-﻿using CoreLib.Entities;
+﻿using Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dal;

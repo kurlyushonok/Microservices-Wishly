@@ -1,4 +1,4 @@
-﻿namespace CoreLib.DTO;
+﻿namespace Dal.DTO;
 
 public class UserSearchDto
 {

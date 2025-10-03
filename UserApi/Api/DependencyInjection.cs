@@ -1,4 +1,5 @@
-﻿using CoreLib.Interfaces;
+﻿using Logic.Interfaces;
+using Dal.Interfaces;
 using Dal.Repositories;
 using Logic.Services;
 using Microsoft.EntityFrameworkCore;

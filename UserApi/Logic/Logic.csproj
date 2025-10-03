@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CoreLib\CoreLib.csproj" />
+      <ProjectReference Include="..\Dal\Dal.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,5 +1,5 @@
-﻿using CoreLib.DTO;
-using CoreLib.Interfaces;
+﻿using Dal.DTO;
+using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;

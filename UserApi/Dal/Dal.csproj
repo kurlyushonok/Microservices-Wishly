@@ -17,7 +17,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CoreLib\CoreLib.csproj" />
-      <ProjectReference Include="..\Logic\Logic.csproj" />
     </ItemGroup>
 
 </Project>

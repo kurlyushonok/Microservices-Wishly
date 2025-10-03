@@ -1,6 +1,7 @@
-﻿using CoreLib.DTO;
-using CoreLib.Entities;
-using CoreLib.Interfaces;
+﻿using Dal.DTO;
+using Dal.Interfaces;
+using Dal.Entities;
+using Logic.Interfaces;
 
 namespace Logic.Services;
 

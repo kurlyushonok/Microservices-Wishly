@@ -1,4 +1,6 @@
-﻿namespace CoreLib.Entities;
+﻿using CoreLib.Entities;
+
+namespace Dal.Entities;
 
 public class User : BaseEntityDal<Guid>
 {

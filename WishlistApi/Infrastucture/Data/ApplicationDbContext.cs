@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using CoreLib.Entities;
 
 namespace Infrastucture.Data;
 
@@ -30,10 +31,10 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.Description)
                 .HasMaxLength(500);
             
-            // entity.HasOne<User>()
-            //     .WithMany()
-            //     .HasForeignKey(w => w.UserId)
-            //     .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne<BaseEntityDal<Guid>>()
+                .WithMany()
+                .HasForeignKey(w => w.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

@@ -1,5 +1,5 @@
-﻿using CoreLib.Entities;
-using CoreLib.Interfaces;
+﻿using Dal.Entities;
+using Dal.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dal.Repositories;
