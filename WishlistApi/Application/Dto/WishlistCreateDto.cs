@@ -1,4 +1,4 @@
-﻿namespace Domain.Dto;
+﻿namespace Application.Dto;
 
 public class WishlistCreateDto
 {
