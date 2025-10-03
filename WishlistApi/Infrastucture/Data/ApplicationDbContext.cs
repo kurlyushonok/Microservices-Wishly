@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using CoreLib.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using CoreLib.Entities;
 
 namespace Infrastucture.Data;
 

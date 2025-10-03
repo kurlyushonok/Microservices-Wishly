@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using CoreLib.Entities;
+
+namespace Domain.Entities;
 
 public class Wishlist: BaseEntityDal<Guid>
 {
