@@ -20,17 +20,17 @@ public class WishlistRepository : IWishlistRepository
         throw new NotImplementedException();
     }
 
-    public Task<Wishlist[]> GetAllByUserId()
+    public Task<Wishlist[]> GetAllByUserIdAsync(Guid userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Wishlist> GetById(Guid id)
+    public Task<Wishlist> GetByIdAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Wishlist> GetByTitle(string title)
+    public Task<Wishlist> GetByTitleAsync(string title)
     {
         throw new NotImplementedException();
     }

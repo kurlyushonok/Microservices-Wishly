@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\CoreLib\CoreLib.csproj" />
+      <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ namespace Infrastucture.Interfaces;
 public interface IWishlistRepository
 {
     /// <summary>
-    /// Добавление вишлиста
+    /// Создание вишлиста
     /// </summary>
     /// <param name="wishlist"></param>
     /// <returns></returns>
@@ -29,21 +29,21 @@ public interface IWishlistRepository
     /// Получение всех вишлистов пользователя по его id
     /// </summary>
     /// <returns></returns>
-    Task<Wishlist[]> GetAllByUserId();
+    Task<Wishlist[]> GetAllByUserIdAsync(Guid userId);
 
     /// <summary>
     /// Получение вишлиста по id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<Wishlist> GetById(Guid id);
+    Task<Wishlist> GetByIdAsync(Guid id);
     
     /// <summary>
     /// Получение вишлиста по названию
     /// </summary>
     /// <param name="title"></param>
     /// <returns></returns>
-    Task<Wishlist> GetByTitle(string title);
+    Task<Wishlist> GetByTitleAsync(string title);
     
     /// <summary>
     /// Проверка существования вишлиста с данным названием у данного пользователя
