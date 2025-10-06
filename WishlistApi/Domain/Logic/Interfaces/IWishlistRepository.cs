@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Infrastucture.Interfaces;
+namespace Domain.Interfaces;
 
 public interface IWishlistRepository
 {

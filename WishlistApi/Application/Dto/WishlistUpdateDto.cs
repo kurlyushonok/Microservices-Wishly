@@ -3,12 +3,17 @@
 public class WishlistUpdateDto
 {
     /// <summary>
+    /// Идентификационный номер вишлиста
+    /// </summary>
+    public required Guid Id { get; set; }
+    
+    /// <summary>
     /// Название вишлиста
     /// </summary>
-    public required string NewTitle { get; set; }
+    public string? NewTitle { get; set; }
     
     /// <summary>
     /// Описание вишлиста
     /// </summary>
-    public required string NewDescription { get; set; }
+    public string? NewDescription { get; set; }
 }

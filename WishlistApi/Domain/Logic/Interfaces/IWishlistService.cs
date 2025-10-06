@@ -9,21 +9,21 @@ public interface IWishlistService
     /// </summary>
     /// <param name="createDto"></param>
     /// <returns></returns>
-    Task<WishlistResponseDto> CreateAsync(WishlistCreateDto createDto);
+    Task<WishlistResponseDto> CreateAsync(WishlistCreateDto createDto, Guid userId);
 
     /// <summary>
     /// Обновление существующего вишлиста
     /// </summary>
     /// <param name="updateDto"></param>
     /// <returns></returns>
-    Task<WishlistResponseDto> UpdateAsync(WishlistUpdateDto updateDto);
+    Task<WishlistResponseDto> UpdateAsync(WishlistUpdateDto updateDto, Guid userId);
 
     /// <summary>
     /// Удаление существующего вишлиста
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(Guid id, Guid userId);
     
     //TODO: точно ли реализовывать через массив?
     /// <summary>
@@ -31,7 +31,7 @@ public interface IWishlistService
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<List<WishlistResponseDto>> GetAllAsync(Guid userId);
+    Task<List<WishlistResponseDto>?> GetAllAsync(Guid userId);
     
     /// <summary>
     /// Получение информации о вишлисте по его id

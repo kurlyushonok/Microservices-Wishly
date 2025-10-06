@@ -15,5 +15,5 @@ public class WishlistResponseDto
     /// <summary>
     /// Описание вишлиста
     /// </summary>
-    public required string Description { get; set; }
+    public required string? Description { get; set; }
 }

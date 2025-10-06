@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastucture.Data;
-using Infrastucture.Interfaces;
+using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastucture.Repositories;
