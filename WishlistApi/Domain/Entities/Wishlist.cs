@@ -18,4 +18,9 @@ public class Wishlist: BaseEntityDal<Guid>
     /// id пользователя, которому принадлежит вишлист
     /// </summary>
     public required Guid UserId { get; set; }
+    
+    /// <summary>
+    /// Дата создания вишлиста
+    /// </summary>
+    public required DateTime CreatedAt { get; set; }
 }

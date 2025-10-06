@@ -31,7 +31,7 @@ public interface IWishlistService
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<WishlistResponseDto[]> GetAllAsync(Guid userId);
+    Task<List<WishlistResponseDto>> GetAllAsync(Guid userId);
     
     /// <summary>
     /// Получение информации о вишлисте по его id

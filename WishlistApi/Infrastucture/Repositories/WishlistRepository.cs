@@ -1,42 +1,69 @@
 ﻿using Domain.Entities;
+using Infrastucture.Data;
 using Infrastucture.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastucture.Repositories;
 
 public class WishlistRepository : IWishlistRepository
 {
-    public Task AddAsync(Wishlist wishlist)
+    private readonly ApplicationDbContext _context;
+
+    public WishlistRepository(ApplicationDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
+    }
+    public async Task AddAsync(Wishlist wishlist)
+    {
+        await _context.Wishlists.AddAsync(wishlist);
+        await _context.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(Wishlist wishlist)
+    public async Task UpdateAsync(Wishlist wishlist)
     {
-        throw new NotImplementedException();
+        var existingWishlist = await _context.Wishlists.FindAsync(wishlist.Id);
+        if (existingWishlist != null)
+        {
+            _context.Wishlists.Update(wishlist);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task DeleteAsync(Wishlist wishlist)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var wishlist = await _context.Wishlists.FindAsync(id);
+        if (wishlist != null)
+        {
+            _context.Wishlists.Remove(wishlist);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task<Wishlist[]> GetAllByUserIdAsync(Guid userId)
+    public async Task<List<Wishlist>?> GetAllByUserIdAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        return await _context.Wishlists
+            .Where(w => w.UserId == userId)
+            .OrderBy(w => w.CreatedAt)
+            .AsNoTracking()
+            .ToListAsync();
     }
 
-    public Task<Wishlist> GetByIdAsync(Guid id)
+    public async Task<Wishlist?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Wishlists.FindAsync(id);
     }
 
-    public Task<Wishlist> GetByTitleAsync(string title)
+    public async Task<Wishlist?> GetByTitleAsync(string title)
     {
-        throw new NotImplementedException();
+        return await _context.Wishlists
+            .AsNoTracking()
+            .FirstOrDefaultAsync(w => w.Title == title);
     }
 
-    public Task<bool> ExistsWithTitleAsync(string title, Guid userId)
+    public async Task<bool> ExistsWithTitleAsync(string title, Guid userId)
     {
-        throw new NotImplementedException();
+        return await _context.Wishlists
+            .AsNoTracking()
+            .AnyAsync(w => w.UserId == userId && w.Title == title);
     }
 }

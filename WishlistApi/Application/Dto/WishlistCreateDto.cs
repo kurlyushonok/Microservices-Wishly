@@ -11,4 +11,9 @@ public class WishlistCreateDto
     /// Описание вишлиста
     /// </summary>
     public required string Description { get; set; }
+    
+    /// <summary>
+    /// Дата создания вишлиста
+    /// </summary>
+    public required DateTime CreatedAt { get; set; }
 }

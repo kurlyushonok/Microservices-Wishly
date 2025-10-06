@@ -1,5 +1,4 @@
-﻿using CoreLib.Entities;
-using Dal.Entities;
+﻿using Dal.Entities;
 
 namespace Dal.Interfaces;
 

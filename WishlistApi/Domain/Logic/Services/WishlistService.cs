@@ -20,7 +20,7 @@ public class WishlistService : IWishlistService
         throw new NotImplementedException();
     }
 
-    public Task<WishlistResponseDto[]> GetAllAsync(Guid userId)
+    public Task<List<WishlistResponseDto>> GetAllAsync(Guid userId)
     {
         throw new NotImplementedException();
     }

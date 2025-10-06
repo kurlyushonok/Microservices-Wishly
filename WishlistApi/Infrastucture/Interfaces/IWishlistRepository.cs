@@ -23,27 +23,27 @@ public interface IWishlistRepository
     /// </summary>
     /// <param name="wishlist"></param>
     /// <returns></returns>
-    Task DeleteAsync(Wishlist wishlist);
+    Task DeleteAsync(Guid id);
 
     /// <summary>
     /// Получение всех вишлистов пользователя по его id
     /// </summary>
     /// <returns></returns>
-    Task<Wishlist[]> GetAllByUserIdAsync(Guid userId);
+    Task<List<Wishlist>?> GetAllByUserIdAsync(Guid userId);
 
     /// <summary>
     /// Получение вишлиста по id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<Wishlist> GetByIdAsync(Guid id);
+    Task<Wishlist?> GetByIdAsync(Guid id);
     
     /// <summary>
     /// Получение вишлиста по названию
     /// </summary>
     /// <param name="title"></param>
     /// <returns></returns>
-    Task<Wishlist> GetByTitleAsync(string title);
+    Task<Wishlist?> GetByTitleAsync(string title);
     
     /// <summary>
     /// Проверка существования вишлиста с данным названием у данного пользователя
