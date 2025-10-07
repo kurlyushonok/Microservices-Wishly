@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("wishlists")]
+[Route("wishly/wishlists")]
 public class WishlistController  : ControllerBase
 {
     private readonly IWishlistService _wishlistService;
@@ -15,7 +15,7 @@ public class WishlistController  : ControllerBase
         _wishlistService = wishlistService;
     }
 
-    [HttpPost("{userId}/create")]
+    [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] WishlistCreateDto createDto, Guid userId)
     {
         try
@@ -33,7 +33,7 @@ public class WishlistController  : ControllerBase
         }
     }
 
-    [HttpPut("{userId}/{wishlistId}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromBody] WishlistUpdateDto updateDto, Guid userId)
     {
         try
@@ -51,7 +51,7 @@ public class WishlistController  : ControllerBase
         }
     }
 
-    [HttpDelete("{userId}/{wishlistId}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid wishlistId, Guid userId)
     {
         try
@@ -65,14 +65,7 @@ public class WishlistController  : ControllerBase
         }
     }
 
-    [HttpGet("{username}/wishlists")]
-    public async Task<IActionResult> GetAllWishlists(Guid userId)
-    {
-        var result = await _wishlistService.GetAllAsync(userId);
-        return Ok(result); 
-    }
-    
-    [HttpDelete("{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         try
@@ -86,7 +79,7 @@ public class WishlistController  : ControllerBase
         }
     }
     
-    [HttpDelete("{title}")]
+    [HttpGet("{title}")]
     public async Task<IActionResult> GetByTitle(string title)
     {
         try

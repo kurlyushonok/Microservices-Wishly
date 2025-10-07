@@ -1,7 +1,6 @@
-﻿using Logic.Interfaces;
-using Dal.Interfaces;
+﻿using Dal.Interfaces;
 using Dal.Repositories;
-using Logic.Services;
+using Dal;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dal;
@@ -16,8 +15,7 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserService, UserService>();
-            
+
         return services;
     }
 }

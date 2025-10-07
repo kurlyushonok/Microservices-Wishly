@@ -15,6 +15,8 @@ public class WishlistService : IWishlistService
     }
     public async Task<WishlistResponseDto> CreateAsync(WishlistCreateDto createDto, Guid userId)
     {
+        //TODO: делать проверку, что пользователь существует
+        
         if (string.IsNullOrWhiteSpace(createDto.Title) || createDto.Title.Length > 100)
             throw new ArgumentException("The title must be between 1 and 100 characters long");
         if (createDto.Description.Length > 500)
@@ -43,6 +45,8 @@ public class WishlistService : IWishlistService
 
     public async Task<WishlistResponseDto> UpdateAsync(WishlistUpdateDto updateDto, Guid userId)
     {
+        //TODO: делать проверку, что пользователь существует
+        
         var wishlist = await _wishlistRepository.GetByIdAsync(updateDto.Id);
         if (wishlist == null)
         {
@@ -72,6 +76,8 @@ public class WishlistService : IWishlistService
 
     public async Task DeleteAsync(Guid id, Guid userId)
     {
+        //TODO: делать проверку, что пользователь существует
+        
         var wishlist = await _wishlistRepository.GetByIdAsync(id);
         if (wishlist == null)
         {
@@ -86,6 +92,8 @@ public class WishlistService : IWishlistService
 
     public async Task<List<WishlistResponseDto>?> GetAllAsync(Guid userId)
     {
+        //TODO: делать проверку, что пользователь существует
+        
         var wishlists = await _wishlistRepository.GetAllByUserIdAsync(userId);
         if (wishlists == null)
             return null;
@@ -132,6 +140,8 @@ public class WishlistService : IWishlistService
 
     public async Task<bool> ExistsWithTitleAsync(string title, Guid id)
     {
+        //TODO: делать проверку, что пользователь существует
+        
         return await _wishlistRepository.ExistsWithTitleAsync(title, id);
     }
 }

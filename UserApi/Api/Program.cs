@@ -1,4 +1,5 @@
 using Dal;
+using Logic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 
 //регистрация зависимостей
 builder.Services.AddDataAccessLayer(builder.Configuration);
+builder.Services.AddBusinessLogic();
 
 
 builder.Services.AddEndpointsApiExplorer();
