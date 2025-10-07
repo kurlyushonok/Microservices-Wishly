@@ -51,9 +51,10 @@ public class WishlistService : IWishlistService
         
         if (string.IsNullOrWhiteSpace(updateDto.NewTitle) || updateDto.NewTitle.Length > 100)
             throw new ArgumentException("The title must be between 1 and 100 characters long");
-
         if (updateDto.NewDescription?.Length > 500)
             throw new ArgumentException("Description must be less than 500 characters");
+        if (wishlist.UserId != userId)
+            throw new UnauthorizedAccessException("You can only update your own wishlists");
         
         wishlist.Title = updateDto.NewTitle.Trim();
         wishlist.Description = updateDto.NewDescription?.Trim();
