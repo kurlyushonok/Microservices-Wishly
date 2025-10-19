@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
+using System.Web;
 using CoreLib.HttpLogic.Services.Interfaces;
 using CoreLib.HttpLogic.Services.Interfaces;
 using CoreLib.TraceLogic.Interfaces;
@@ -135,20 +136,22 @@ internal class HttpRequestService : IHttpRequestService
     {
         var client = _httpConnectionService.CreateHttpClient(connectionData);
 
-        var httpRequestMessage = new HttpRequestMessage();
+        var httpRequestMessage = CreateHttpRequestMessage(requestData);
 
         foreach (var traceWriter in _traceWriterList)
         {
             httpRequestMessage.Headers.Add(traceWriter.Name, traceWriter.GetValue());
         }
 
-        var res = await _httpConnectionService.SendRequestAsync(httpRequestMessage, null, default);
+        var responseMessage = await _httpConnectionService.SendRequestAsync(
+            httpRequestMessage, 
+            client, 
+            connectionData.CancellationToken);
 
-        //TODO: что здесь  возвращать?
-        return null;
+        return await CreateHttpResponseAsync<TResponse>(responseMessage);
     }
 
-    private static HttpContent PrepairContent(object body, ContentType contentType)
+    private static HttpContent PrepareContent(object body, ContentType contentType)
     {
         switch (contentType)
         {
@@ -209,5 +212,75 @@ internal class HttpRequestService : IHttpRequestService
             default:
                 throw new ArgumentOutOfRangeException(nameof(contentType), contentType, null);
         }
+    }
+
+    private HttpRequestMessage CreateHttpRequestMessage(HttpRequestData requestData)
+    {
+        var requestMessage = new HttpRequestMessage
+        {
+            Method = requestData.Method,
+            RequestUri = requestData.Uri
+        };
+
+        if (requestData.QueryParameterList.Any())
+        {
+            var uriBuilder = new UriBuilder(requestData.Uri);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+            foreach (var parameter in requestData.QueryParameterList)
+            {
+                query[parameter.Key] = parameter.Value;
+            }
+
+            uriBuilder.Query = query.ToString();
+            requestMessage.RequestUri = uriBuilder.Uri;
+        }
+
+        if (requestData.Body != null)
+        {
+            requestMessage.Content = PrepareContent(requestData.Body, requestData.ContentType);
+        }
+
+        foreach (var header in requestData.HeaderDictionary)
+        {
+            requestMessage.Headers.Add(header.Key, header.Value);
+        }
+        
+        return requestMessage;
+    }
+
+    private async Task<HttpResponse<TResponse>> CreateHttpResponseAsync<TResponse>(HttpResponseMessage responseMessage)
+    {
+        TResponse body = default;
+        if (responseMessage.Content != null && typeof(TResponse) != typeof(object))
+        {
+            var content = await responseMessage.Content.ReadAsStringAsync();
+            body = DeserializeContent<TResponse>(content, responseMessage.Content.Headers);
+        }
+
+        return new HttpResponse<TResponse>()
+        {
+            StatusCode = responseMessage.StatusCode,
+            Headers = responseMessage.Headers,
+            ContentHeaders = responseMessage.Content?.Headers,
+            Body = body
+        };
+    }
+
+    private TResponse? DeserializeContent<TResponse>(string content, HttpContentHeaders headers)
+    {
+        if (string.IsNullOrEmpty(content))
+        {
+            return default;
+        }
+
+        var contentType = headers.ContentType?.MediaType;
+
+        if (contentType?.Contains("application/json") == true)
+        {
+            return JsonConvert.DeserializeObject<TResponse>(content);
+        }
+        
+        throw new InvalidOperationException($"Unsupported content type: {contentType}");
     }
 }

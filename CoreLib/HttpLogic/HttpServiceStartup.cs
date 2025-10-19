@@ -8,12 +8,12 @@ using Microsoft.Extensions.Options;
 namespace CoreLib.HttpLogic;
 
 /// <summary>
-/// ����������� � DI �������� ��� HTTP-����������
+/// Регистрация в DI сервисов для HTTP-соединений
 /// </summary>
 public static class HttpServiceStartup
 {
 	/// <summary>
-	/// ���������� ������� ��� ������������� �������� �� HTTP
+	/// Добавление сервиса для осуществления запросов по HTTP
 	/// </summary>
 	public static IServiceCollection AddHttpRequestService(this IServiceCollection services)
 	{
@@ -21,9 +21,9 @@ public static class HttpServiceStartup
 			.AddHttpContextAccessor()
 			.AddHttpClient()
 			.AddTransient<IHttpConnectionService, HttpConnectionService>();
-
+        
 		services.TryAddTransient<IHttpRequestService, HttpRequestService>();
-
+        
 		return services;
 	}
 }

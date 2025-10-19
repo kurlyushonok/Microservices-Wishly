@@ -7,7 +7,7 @@ namespace CoreLib.TraceIdLogic;
 
 public interface ITraceIdAccessor
 {
-    //TODO: описать интерфейс?
+    
 }
 
 public static class StartUpTraceId
