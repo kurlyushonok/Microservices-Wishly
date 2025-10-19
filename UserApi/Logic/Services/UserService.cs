@@ -143,4 +143,9 @@ public class UserService : IUserService
     {
         return await _userRepository.ExistsUsernameAsync(username);
     }
+    
+    public async Task<bool> IdExistsAsync(Guid id)
+    {
+        return await _userRepository.ExistsIdAsync(id);
+    }
 }

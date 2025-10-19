@@ -45,5 +45,12 @@ public interface IUserRepository
     /// <param name="username"></param>
     /// <returns></returns>
     Task<bool> ExistsUsernameAsync(string username);
+    
+    /// <summary>
+    /// Проверка существования пользователя в базе данных с данным id
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    Task<bool> ExistsIdAsync(Guid id);
 
 }
