@@ -22,7 +22,7 @@ public class UserApiClient : IUserApiClient
             var requestData = new HttpRequestData
             {
                 Method = HttpMethod.Get,
-                Uri = new Uri($"{_userApiBaseUrl}/wishly/users/{userId}"),
+                Uri = new Uri($"{_userApiBaseUrl}/wishly/users/{userId}/exists"),
                 ContentType = ContentType.ApplicationJson
             };
 
