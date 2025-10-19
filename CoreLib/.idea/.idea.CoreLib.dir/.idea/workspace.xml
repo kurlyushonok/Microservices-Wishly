@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8348d1d-ec8d-48ab-9c2e-a6a6bb69ac59" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CoreLib.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CoreLib.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HttpLogic/HttpServiceStartup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HttpLogic/HttpServiceStartup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HttpLogic/Services/HttpRequestService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HttpLogic/Services/HttpRequestService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TraceIdLogic/TraceIdAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TraceIdLogic/TraceIdAccessor.cs" afterDir="false" />
-    </list>
+    <list default="true" id="c8348d1d-ec8d-48ab-9c2e-a6a6bb69ac59" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +48,7 @@
       <updated>1759510471414</updated>
       <workItem from="1759510472449" duration="623000" />
       <workItem from="1760884510386" duration="1220000" />
-      <workItem from="1760885784969" duration="3609000" />
+      <workItem from="1760885784969" duration="4173000" />
     </task>
     <servers />
   </component>

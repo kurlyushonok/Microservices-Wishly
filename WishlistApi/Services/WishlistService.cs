@@ -1,4 +1,5 @@
 ﻿using Application.Dto;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Logic.Interfaces;
 using Domain.Interfaces;
@@ -8,14 +9,18 @@ namespace Services;
 public class WishlistService : IWishlistService
 {
     private readonly IWishlistRepository _wishlistRepository;
+    private readonly IUserApiClient _userApiClient;
 
-    public WishlistService(IWishlistRepository wishlistRepository)
+    public WishlistService(IWishlistRepository wishlistRepository, IUserApiClient userApiClient)
     {
         _wishlistRepository = wishlistRepository;
+        _userApiClient = userApiClient;
     }
     public async Task<WishlistResponseDto> CreateAsync(WishlistCreateDto createDto, Guid userId)
     {
-        //TODO: делать проверку, что пользователь существует
+        var userExists = await _userApiClient.UserExistsAsync(userId);
+        if (!userExists) 
+            throw new ArgumentException("User not found");
         
         if (string.IsNullOrWhiteSpace(createDto.Title) || createDto.Title.Length > 100)
             throw new ArgumentException("The title must be between 1 and 100 characters long");
@@ -39,13 +44,16 @@ public class WishlistService : IWishlistService
         {
             Id = wishlist.Id,
             Title = wishlist.Title,
-            Description = wishlist.Description
+            Description = wishlist.Description,
+            UserId = wishlist.UserId,
         };
     }
 
     public async Task<WishlistResponseDto> UpdateAsync(WishlistUpdateDto updateDto, Guid userId)
     {
-        //TODO: делать проверку, что пользователь существует
+        var userExists = await _userApiClient.UserExistsAsync(userId);
+        if (!userExists) 
+            throw new ArgumentException("User not found");
         
         var wishlist = await _wishlistRepository.GetByIdAsync(updateDto.Id);
         if (wishlist == null)
@@ -70,13 +78,16 @@ public class WishlistService : IWishlistService
         {
             Id = wishlist.Id,
             Title = wishlist.Title,
-            Description = wishlist.Description
+            Description = wishlist.Description,
+            UserId = wishlist.UserId,
         };
     }
 
     public async Task DeleteAsync(Guid id, Guid userId)
     {
-        //TODO: делать проверку, что пользователь существует
+        var userExists = await _userApiClient.UserExistsAsync(userId);
+        if (!userExists) 
+            throw new ArgumentException("User not found");
         
         var wishlist = await _wishlistRepository.GetByIdAsync(id);
         if (wishlist == null)
@@ -92,7 +103,9 @@ public class WishlistService : IWishlistService
 
     public async Task<List<WishlistResponseDto>?> GetAllAsync(Guid userId)
     {
-        //TODO: делать проверку, что пользователь существует
+        var userExists = await _userApiClient.UserExistsAsync(userId);
+        if (!userExists) 
+            throw new ArgumentException("User not found");
         
         var wishlists = await _wishlistRepository.GetAllByUserIdAsync(userId);
         if (wishlists == null)
@@ -102,7 +115,8 @@ public class WishlistService : IWishlistService
             {
                 Id = w.Id,
                 Title = w.Title,
-                Description = w.Description
+                Description = w.Description,
+                UserId = w.UserId,
             }).ToList();
     }
 
@@ -118,7 +132,8 @@ public class WishlistService : IWishlistService
         {
             Id = wishlist.Id,
             Title = wishlist.Title,
-            Description = wishlist.Description
+            Description = wishlist.Description,
+            UserId = wishlist.UserId,
         };
     }
 
@@ -134,14 +149,17 @@ public class WishlistService : IWishlistService
         {
             Id = wishlist.Id,
             Title = wishlist.Title,
-            Description = wishlist.Description
+            Description = wishlist.Description,
+            UserId = wishlist.UserId,
         };
     }
 
-    public async Task<bool> ExistsWithTitleAsync(string title, Guid id)
+    public async Task<bool> ExistsWithTitleAsync(string title, Guid userId)
     {
-        //TODO: делать проверку, что пользователь существует
+        var userExists = await _userApiClient.UserExistsAsync(userId);
+        if (!userExists) 
+            throw new ArgumentException("User not found");
         
-        return await _wishlistRepository.ExistsWithTitleAsync(title, id);
+        return await _wishlistRepository.ExistsWithTitleAsync(title, userId);
     }
 }
