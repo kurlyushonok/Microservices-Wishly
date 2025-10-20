@@ -48,9 +48,16 @@ public interface IUserService
     Task DeleteAsync(Guid id);
     
     /// <summary>
-    /// Проверка существования пользователя с данным именем
+    /// Проверка существования пользователя с данным id
     /// </summary>
     /// <param name="username"></param>
     /// <returns></returns>
     Task<bool> UsernameExistsAsync(string username);
+    
+    /// <summary>
+    /// Проверка существования пользователя с данным id
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    Task<bool> IdExistsAsync(Guid id);
 }

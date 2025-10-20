@@ -124,4 +124,18 @@ public class UserController : ControllerBase
             return Unauthorized(new { error = ex.Message });
         }
     }
+    
+    [HttpGet("{id}/exists")]
+    public async Task<IActionResult> UserExists(Guid id)
+    {
+        try
+        {
+            var isExist = await _userService.IdExistsAsync(id);
+            return Ok(new { exists = isExist });
+        }
+        catch (ArgumentException)
+        {
+            return Ok(new { exists = false });
+        }
+    }
 }

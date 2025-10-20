@@ -16,4 +16,9 @@ public class WishlistResponseDto
     /// Описание вишлиста
     /// </summary>
     public required string? Description { get; set; }
+    
+    /// <summary>
+    /// id владельца вишлиста
+    /// </summary>
+    public required Guid UserId { get; set; }
 }

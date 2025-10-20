@@ -4,55 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8348d1d-ec8d-48ab-9c2e-a6a6bb69ac59" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../UserApi/Api/Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Api/Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Api/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Api/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Api/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Api/DependencyInjection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/DTO/UserAuthDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/DTO/UserAuthDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/DTO/UserRegisterDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/DTO/UserRegisterDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/DTO/UserResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/DTO/UserResponseDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/DTO/UserSearchDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/DTO/UserSearchDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/DTO/UserUpdateDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/DTO/UserUpdateDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/Entities/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/Interfaces/IUserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/Interfaces/IUserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/CoreLib/Interfaces/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Logic/Interfaces/IUserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Dal/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/ApplicationDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Dal/Dal.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/Dal.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Dal/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Dal/Repositories/UserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Logic/Logic.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Logic/Logic.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UserApi/Logic/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../UserApi/Logic/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WishlistApi/Infrastucture/Data/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WishlistApi/Infrastucture/Data/ApplicationDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WishlistApi/Infrastucture/Infrastucture.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../WishlistApi/Infrastucture/Infrastucture.csproj" afterDir="false" />
-    </list>
+    <list default="true" id="c8348d1d-ec8d-48ab-9c2e-a6a6bb69ac59" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/44cad551704bc7dae78cc7717b8b9f9313582aa8e67a6585a69de0cc33b4b8/IServiceCollection.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="33Z2rEWrANuIoHrE2v8E6T8mBFz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Оля\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Оля\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Оля\\AppData\\Local\\Symbols\\src"
-    ]
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;HttpInteraction&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -62,13 +47,34 @@
       <option name="presentableId" value="Default" />
       <updated>1759510471414</updated>
       <workItem from="1759510472449" duration="623000" />
+      <workItem from="1760884510386" duration="1220000" />
+      <workItem from="1760885784969" duration="4173000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

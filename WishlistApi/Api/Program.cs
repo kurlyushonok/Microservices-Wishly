@@ -1,9 +1,17 @@
-using Infrastucture;
+using Application.Interfaces;
+using CoreLib.HttpLogic;
+using CoreLib.TraceIdLogic;
+using Infrastructure;
+using Infrastructure.HttpClient;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddHttpRequestService();
+builder.Services.TryAddTraceId();
+builder.Services.AddScoped<IUserApiClient, UserApiClient>();
 
 //регистрация зависимостей
 builder.Services.AddDataAccessLayer(builder.Configuration);
