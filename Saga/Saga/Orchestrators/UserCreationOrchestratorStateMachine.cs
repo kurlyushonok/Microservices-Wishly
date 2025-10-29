@@ -23,6 +23,7 @@ public class UserCreationOrchestratorStateMachine : MassTransitStateMachine<User
         ConfigureInitialBehavior();
         ConfigureCreatingUserState();
         ConfigureCreatingWishlistState();
+        ConfigureCompensatingState();
         ConfigureFinalization();
     }
 
@@ -123,6 +124,13 @@ public class UserCreationOrchestratorStateMachine : MassTransitStateMachine<User
                     Reason = context.Saga.FailureReason ?? "Unknown error"
                 })
                 .TransitionTo(Compensating)
+        );
+    }
+    
+    private void ConfigureCompensatingState()
+    {
+        During(Compensating,
+            Ignore(UserCreationFailed)
         );
     }
     
