@@ -33,7 +33,7 @@ public class UserCreationOrchestratorMap : SagaClassMap<UserCreationOrchestrator
         entity.Property(x => x.Username)
             .HasMaxLength(100)
             .IsRequired();
-        entity.Property(x => x.PasswordHash)
+        entity.Property(x => x.Password)
             .HasMaxLength(255);
         entity.Property(x => x.FailureReason)
             .HasMaxLength(1000);

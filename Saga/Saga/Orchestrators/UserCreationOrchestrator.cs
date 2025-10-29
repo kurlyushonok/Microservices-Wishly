@@ -8,7 +8,8 @@ public class UserCreationOrchestrator : SagaStateMachineInstance
     public string CurrentState { get; set; } = "Initial";
     
     public string Username { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string ConfirmPassword { get; set; } = string.Empty;
     public Guid? UserId { get; set; }
     public Guid? WishlistId { get; set; }
     public string? FailureReason { get; set; }

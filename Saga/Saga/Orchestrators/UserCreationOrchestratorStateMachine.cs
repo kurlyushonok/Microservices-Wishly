@@ -57,13 +57,14 @@ public class UserCreationOrchestratorStateMachine : MassTransitStateMachine<User
                 .Then(context =>
                 {
                     context.Saga.Username = context.Message.Username;
-                    context.Saga.PasswordHash = context.Message.PasswordHash;
+                    context.Saga.Password = context.Message.Password;
                 })
                 .Publish(context => new CreateUser
                 {
                     CorrelationId = context.Saga.CorrelationId,
                     Username = context.Saga.Username,
-                    PasswordHash = context.Saga.PasswordHash
+                    Password = context.Saga.Password,
+                    ConfirmPassword = context.Saga.ConfirmPassword
                 })
                 .TransitionTo(CreatingUser)
         );
