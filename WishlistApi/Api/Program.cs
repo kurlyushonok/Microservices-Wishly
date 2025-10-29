@@ -1,8 +1,10 @@
+using Api.Consumers;
 using Application.Interfaces;
 using CoreLib.HttpLogic;
 using CoreLib.TraceIdLogic;
 using Infrastructure;
 using Infrastructure.HttpClient;
+using MassTransit;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,22 @@ builder.Services.AddScoped<IUserApiClient, UserApiClient>();
 //регистрация зависимостей
 builder.Services.AddDataAccessLayer(builder.Configuration);
 builder.Services.AddBusinessLogic();
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CreateDefaultWishlistConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

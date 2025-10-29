@@ -5,9 +5,10 @@
 /// </summary>
 public record StartUserCreation
 {
-    public Guid CorrelationId { get; init; }
-    public string Username { get; init; }
-    public string Password { get; init; }
+    public required Guid CorrelationId { get; init; }
+    public required string Username { get; init; }
+    public required string Password { get; init; }
+    public required string ConfirmPassword { get; init; }
 }
 
 /// <summary>
@@ -15,11 +16,11 @@ public record StartUserCreation
 /// </summary>
 public record CreateUser
 {
-    public Guid CorrelationId { get; init; }
-    public string Username { get; init; } = string.Empty;
+    public required Guid CorrelationId { get; init; }
+    public required string Username { get; init; } = string.Empty;
     
-    public string Password { get; init; } = string.Empty;
-    public string ConfirmPassword { get; init; } = string.Empty;
+    public required string Password { get; init; } = string.Empty;
+    public required string ConfirmPassword { get; init; } = string.Empty;
 }
 
 /// <summary>
@@ -27,9 +28,9 @@ public record CreateUser
 /// </summary>
 public record UserCreated
 {
-    public Guid CorrelationId { get; init; }
-    public Guid UserId { get; init; }
-    public string Username { get; init; } = string.Empty;
+    public required Guid CorrelationId { get; init; }
+    public required Guid UserId { get; init; }
+    public required string Username { get; init; } = string.Empty;
 }
 
 /// <summary>
@@ -37,10 +38,10 @@ public record UserCreated
 /// </summary>
 public record CreateDefaultWishlist
 {
-    public Guid CorrelationId { get; init; }
-    public Guid UserId { get; init; }
-    public string Username { get; init; } = string.Empty;
-    public DateTime CreatedAt { get; init; }
+    public required Guid CorrelationId { get; init; }
+    public required Guid UserId { get; init; }
+    public required string Username { get; init; } = string.Empty;
+    public required DateTime CreatedAt { get; init; }
 }
 
 /// <summary>
@@ -48,9 +49,9 @@ public record CreateDefaultWishlist
 /// </summary>
 public record DefaultWishlistCreated
 {
-    public Guid CorrelationId { get; init; }
-    public Guid UserId { get; init; }
-    public Guid WishlistId { get; init; }
+    public required Guid CorrelationId { get; init; }
+    public required Guid UserId { get; init; }
+    public required Guid WishlistId { get; init; }
 }
 
 /// <summary>
@@ -58,9 +59,9 @@ public record DefaultWishlistCreated
 /// </summary>
 public record UserCreationCompleted
 {
-    public Guid CorrelationId { get; init; }
-    public Guid UserId { get; init; }
-    public Guid WishlistId { get; init; }
+    public required Guid CorrelationId { get; init; }
+    public required Guid UserId { get; init; }
+    public required Guid WishlistId { get; init; }
 }
 
 /// <summary>
@@ -68,8 +69,8 @@ public record UserCreationCompleted
 /// </summary>
 public record UserCreationFailed
 {
-    public Guid CorrelationId { get; init; }
-    public string Reason { get; init; } = string.Empty;
+    public required Guid CorrelationId { get; init; }
+    public required string Reason { get; init; } = string.Empty;
 }
 
 /// <summary>
@@ -77,7 +78,7 @@ public record UserCreationFailed
 /// </summary>
 public record CompensateUserCreation
 {
-    public Guid CorrelationId { get; init; }
-    public Guid UserId { get; init; }
-    public string Reason { get; init; } = string.Empty;
+    public required Guid CorrelationId { get; init; }
+    public required Guid UserId { get; init; }
+    public required string Reason { get; init; } = string.Empty;
 }
