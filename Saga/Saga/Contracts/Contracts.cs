@@ -40,6 +40,7 @@ public record CreateDefaultWishlist
     public Guid CorrelationId { get; init; }
     public Guid UserId { get; init; }
     public string Username { get; init; } = string.Empty;
+    public DateTime CreatedAt { get; init; }
 }
 
 /// <summary>

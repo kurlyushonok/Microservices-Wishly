@@ -83,7 +83,8 @@ public class UserCreationOrchestratorStateMachine : MassTransitStateMachine<User
                 {
                     CorrelationId = context.Saga.CorrelationId,
                     UserId = context.Saga.UserId!.Value,
-                    Username = context.Saga.Username
+                    Username = context.Saga.Username,
+                    CreatedAt = context.Saga.CreatedAt
                 })
                 .TransitionTo(CreatingWishlist),
 

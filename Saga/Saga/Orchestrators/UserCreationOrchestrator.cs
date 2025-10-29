@@ -12,5 +12,7 @@ public class UserCreationOrchestrator : SagaStateMachineInstance
     public string ConfirmPassword { get; set; } = string.Empty;
     public Guid? UserId { get; set; }
     public Guid? WishlistId { get; set; }
+    
+    public DateTime CreatedAt { get; init; }
     public string? FailureReason { get; set; }
 }

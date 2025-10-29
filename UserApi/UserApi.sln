@@ -7,7 +7,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dal", "Dal\Dal.csproj", "{1CE103B7-AFAD-41CF-ADC1-A0F8E1BBD587}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib", "..\CoreLib\CoreLib.csproj", "{GUID}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib", "..\Saga\Saga\Saga.csproj", "{GUID}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saga", "..\Saga\Saga\Saga.csproj", "{GUID}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
