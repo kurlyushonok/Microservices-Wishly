@@ -1,6 +1,8 @@
 ﻿using Dal.DTO;
 using Logic.Interfaces;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using Saga.Contracts;
 
 namespace Api.Controllers;
 
@@ -9,10 +11,12 @@ namespace Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IPublishEndpoint publishEndpoint)
     {
         _userService = userService;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpPost("register")]
@@ -136,6 +140,35 @@ public class UserController : ControllerBase
         catch (ArgumentException)
         {
             return Ok(new { exists = false });
+        }
+    }
+    
+    [HttpPost("register-with-saga")]
+    public async Task<IActionResult> RegisterWithSaga([FromBody] UserRegisterDto registerDto)
+    {
+        try
+        {
+            var correlationId = Guid.NewGuid();
+            
+            await _publishEndpoint.Publish(new StartUserCreation
+            {
+                CorrelationId = correlationId,
+                Username = registerDto.Username,
+                Password = registerDto.Password,
+                ConfirmPassword = registerDto.ConfirmPassword,
+            });
+
+            return Accepted(new 
+            { 
+                CorrelationId = correlationId,
+                UserId = Guid.NewGuid(),
+                Message = "User creation started", 
+                Status = "Processing" 
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = ex.Message });
         }
     }
 }

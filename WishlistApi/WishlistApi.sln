@@ -11,6 +11,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib", "..\CoreLib\CoreLib.csproj", "{00000000-0000-0000-0000-000000000000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{32C4121B-3CC8-4A09-ACA2-5AC76BE73265}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saga", "..\Saga\Saga\Saga.csproj", "{GUID}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

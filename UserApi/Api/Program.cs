@@ -1,5 +1,7 @@
+using Api.Consumers;
 using Dal;
 using Logic;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,22 @@ builder.Services.AddControllers();
 builder.Services.AddDataAccessLayer(builder.Configuration);
 builder.Services.AddBusinessLogic();
 
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CreateUserConsumer>();
+    x.AddConsumer<CompensateUserCreationConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
