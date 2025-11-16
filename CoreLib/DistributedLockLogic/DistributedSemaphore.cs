@@ -7,7 +7,6 @@ public class DistributedSemaphore : IDistributedSemaphore
 {
     private readonly IDatabase _redisDatabase;
     private readonly string _key;
-    private readonly string _semaphoreKey;
     
     public string Name { get; }
     public int MaxCount { get; }
@@ -21,7 +20,6 @@ public class DistributedSemaphore : IDistributedSemaphore
         _redisDatabase = connection.GetDatabase();
         
         _key = $"semaphore:{name}";
-        _semaphoreKey = $"semaphore:{name}:lock";
     }
     
     public IDistributedSynchronizationHandle? TryAcquire(TimeSpan timeout = new TimeSpan(),
@@ -47,7 +45,7 @@ public class DistributedSemaphore : IDistributedSemaphore
     public async ValueTask<IDistributedSynchronizationHandle> AcquireAsync(TimeSpan? timeout = null, CancellationToken cancellationToken = new CancellationToken())
     {
         var actualTimeout = timeout ?? Timeout.InfiniteTimeSpan;
-        var handle = await InternalTryAcquireAsync(timeout, cancellationToken).ConfigureAwait(false);
+        var handle = await InternalTryAcquireAsync(actualTimeout, cancellationToken).ConfigureAwait(false);
 
         if (handle == null)
         {
@@ -80,7 +78,7 @@ public class DistributedSemaphore : IDistributedSemaphore
 
             if (timeout != Timeout.InfiniteTimeSpan)
             {
-                remainingTimeout = timeout - (DateTime.UtcNow - start);
+                remainingTimeout = timeout.Value - (DateTime.UtcNow - start);
                 if (remainingTimeout <= TimeSpan.Zero)
                 {
                     return null;
@@ -94,15 +92,15 @@ public class DistributedSemaphore : IDistributedSemaphore
     private async Task<IDistributedSynchronizationHandle?> TryAcquireOnceAsync()
     {
         var redisScript = @"
-                local current = redis.call('GET, KEYS[1])
+                local current = redis.call('GET', KEYS[1])
                 if not current then
-                    redis.call('SET, KEYS[1], ARGV[1] - 1)
+                    redis.call('SET', KEYS[1], ARGV[1] - 1)
                     return 1
                 end
 
                 local count = tonumber(current)
                 if count > 0 then
-                    redis.call('DECR;, KEYS[1])
+                    redis.call('DECR', KEYS[1])
                     return 1
                 end
                 return 0
@@ -136,7 +134,7 @@ public class DistributedSemaphore : IDistributedSemaphore
                 if current then
                     local count = tonumber(current)
                     if count < tonumber(ARGV[1]) then
-                        redis.call('INCR;, KEYS[1]')
+                        redis.call('INCR', KEYS[1])
                         return 1
                     end
                 end
