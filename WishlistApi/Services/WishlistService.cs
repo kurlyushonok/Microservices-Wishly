@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Domain.Entities;
 using Domain.Logic.Interfaces;
 using Domain.Interfaces;
+using CoreLib.DistributedLockLogic;
 
 namespace Services;
 
@@ -10,95 +11,113 @@ public class WishlistService : IWishlistService
 {
     private readonly IWishlistRepository _wishlistRepository;
     private readonly IUserApiClient _userApiClient;
+    private readonly IDistributedSemaphoreFactory _semaphoreFactory;
 
-    public WishlistService(IWishlistRepository wishlistRepository, IUserApiClient userApiClient)
+    public WishlistService(IWishlistRepository wishlistRepository, IUserApiClient userApiClient, 
+        IDistributedSemaphoreFactory semaphoreFactory)
     {
         _wishlistRepository = wishlistRepository;
         _userApiClient = userApiClient;
+        _semaphoreFactory = semaphoreFactory;
     }
     public async Task<WishlistResponseDto> CreateAsync(WishlistCreateDto createDto, Guid userId)
     {
-        var userExists = await _userApiClient.UserExistsAsync(userId);
-        if (!userExists) 
-            throw new ArgumentException("User not found");
+        var semaphore = _semaphoreFactory.Create($"wishlist_create_{userId}_{createDto.Title}", 1);
+
+        await using (await semaphore.AcquireAsync(TimeSpan.FromSeconds(30)))
+        {
+            var userExists = await _userApiClient.UserExistsAsync(userId);
+            if (!userExists) 
+                throw new ArgumentException("User not found");
         
-        if (string.IsNullOrWhiteSpace(createDto.Title) || createDto.Title.Length > 100)
-            throw new ArgumentException("The title must be between 1 and 100 characters long");
-        if (createDto.Description.Length > 500)
-            throw new ArgumentException("The title must be between 1 and 100 characters long");
-        if (await _wishlistRepository.ExistsWithTitleAsync(createDto.Title, userId))
-            throw new InvalidOperationException($"Wishlist with title '{createDto.Title}' already exists");
+            if (string.IsNullOrWhiteSpace(createDto.Title) || createDto.Title.Length > 100)
+                throw new ArgumentException("The title must be between 1 and 100 characters long");
+            if (createDto.Description.Length > 500)
+                throw new ArgumentException("The title must be between 1 and 100 characters long");
+            if (await _wishlistRepository.ExistsWithTitleAsync(createDto.Title, userId))
+                throw new InvalidOperationException($"Wishlist with title '{createDto.Title}' already exists");
 
-        var wishlist = new Wishlist
-        {
-            Id = Guid.NewGuid(),
-            Title = createDto.Title,
-            Description = createDto.Description,
-            UserId = userId,
-            CreatedAt = DateTime.Now
-        };
+            var wishlist = new Wishlist
+            {
+                Id = Guid.NewGuid(),
+                Title = createDto.Title,
+                Description = createDto.Description,
+                UserId = userId,
+                CreatedAt = DateTime.Now
+            };
 
-        await _wishlistRepository.AddAsync(wishlist);
+            await _wishlistRepository.AddAsync(wishlist);
 
-        return new WishlistResponseDto
-        {
-            Id = wishlist.Id,
-            Title = wishlist.Title,
-            Description = wishlist.Description,
-            UserId = wishlist.UserId,
-        };
+            return new WishlistResponseDto
+            {
+                Id = wishlist.Id,
+                Title = wishlist.Title,
+                Description = wishlist.Description,
+                UserId = wishlist.UserId,
+            };
+        }
     }
 
     public async Task<WishlistResponseDto> UpdateAsync(WishlistUpdateDto updateDto, Guid userId)
     {
-        var userExists = await _userApiClient.UserExistsAsync(userId);
-        if (!userExists) 
-            throw new ArgumentException("User not found");
-        
-        var wishlist = await _wishlistRepository.GetByIdAsync(updateDto.Id);
-        if (wishlist == null)
+        var semaphore = _semaphoreFactory.Create($"wishlist_update_{updateDto.Id}", 1);
+
+        await using (await semaphore.AcquireAsync(TimeSpan.FromSeconds(30)))
         {
-            throw new ArgumentException("Wishlist not found");
+            var userExists = await _userApiClient.UserExistsAsync(userId);
+            if (!userExists) 
+                throw new ArgumentException("User not found");
+        
+            var wishlist = await _wishlistRepository.GetByIdAsync(updateDto.Id);
+            if (wishlist == null)
+            {
+                throw new ArgumentException("Wishlist not found");
+            }
+        
+            if (string.IsNullOrWhiteSpace(updateDto.NewTitle) || updateDto.NewTitle.Length > 100)
+                throw new ArgumentException("The title must be between 1 and 100 characters long");
+            if (updateDto.NewDescription?.Length > 500)
+                throw new ArgumentException("Description must be less than 500 characters");
+            if (wishlist.UserId != userId)
+                throw new UnauthorizedAccessException("You can only update your own wishlists");
+        
+            wishlist.Title = updateDto.NewTitle.Trim();
+            wishlist.Description = updateDto.NewDescription?.Trim();
+            wishlist.CreatedAt = DateTime.UtcNow;
+
+            await _wishlistRepository.UpdateAsync(wishlist);
+
+            return new WishlistResponseDto
+            {
+                Id = wishlist.Id,
+                Title = wishlist.Title,
+                Description = wishlist.Description,
+                UserId = wishlist.UserId,
+            };
         }
-        
-        if (string.IsNullOrWhiteSpace(updateDto.NewTitle) || updateDto.NewTitle.Length > 100)
-            throw new ArgumentException("The title must be between 1 and 100 characters long");
-        if (updateDto.NewDescription?.Length > 500)
-            throw new ArgumentException("Description must be less than 500 characters");
-        if (wishlist.UserId != userId)
-            throw new UnauthorizedAccessException("You can only update your own wishlists");
-        
-        wishlist.Title = updateDto.NewTitle.Trim();
-        wishlist.Description = updateDto.NewDescription?.Trim();
-        wishlist.CreatedAt = DateTime.UtcNow;
-
-        await _wishlistRepository.UpdateAsync(wishlist);
-
-        return new WishlistResponseDto
-        {
-            Id = wishlist.Id,
-            Title = wishlist.Title,
-            Description = wishlist.Description,
-            UserId = wishlist.UserId,
-        };
     }
 
     public async Task DeleteAsync(Guid id, Guid userId)
     {
-        var userExists = await _userApiClient.UserExistsAsync(userId);
-        if (!userExists) 
-            throw new ArgumentException("User not found");
-        
-        var wishlist = await _wishlistRepository.GetByIdAsync(id);
-        if (wishlist == null)
+        var semaphore = _semaphoreFactory.Create($"wishlist_delete_{id}", 1);
+
+        await using (await semaphore.AcquireAsync(TimeSpan.FromSeconds(30)))
         {
-            return;
+            var userExists = await _userApiClient.UserExistsAsync(userId);
+            if (!userExists) 
+                throw new ArgumentException("User not found");
+        
+            var wishlist = await _wishlistRepository.GetByIdAsync(id);
+            if (wishlist == null)
+            {
+                return;
+            }
+        
+            if (wishlist.UserId != userId)
+                throw new UnauthorizedAccessException("You can only delete your own wishlists");
+        
+            await _wishlistRepository.DeleteAsync(id);
         }
-        
-        if (wishlist.UserId != userId)
-            throw new UnauthorizedAccessException("You can only delete your own wishlists");
-        
-        await _wishlistRepository.DeleteAsync(id);
     }
 
     public async Task<List<WishlistResponseDto>?> GetAllAsync(Guid userId)
