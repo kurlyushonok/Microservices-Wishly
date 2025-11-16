@@ -3,9 +3,9 @@ using CoreLib.DistributedLockLogic;
 
 namespace CoreLib.RedisSync;
 
-public class RedisSyncStartup
+public static class RedisSyncStartup
 {
-    public static IServiceCollection ConfigureServices(IServiceCollection services, string connectionString)
+    public static IServiceCollection AddRedisDistributedSemaphore(this IServiceCollection services, string? connectionString)
     {
         services.AddSingleton<IDistributedSemaphoreFactory>(
             new RedisDistributedSemaphoreFactory(connectionString));
