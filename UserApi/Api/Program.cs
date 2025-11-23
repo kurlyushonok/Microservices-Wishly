@@ -5,12 +5,16 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CoreLib.RedisSync;
+using CoreLib.DistributedLockLogic;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
 //регистрация зависимостей
+builder.Services.AddRedisDistributedSemaphore(
+    builder.Configuration.GetConnectionString("Redis"));
 builder.Services.AddDataAccessLayer(builder.Configuration);
 builder.Services.AddBusinessLogic();
 

@@ -7,11 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DistributedLock.Redis" Version="1.0.2" />
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
       <PackageReference Include="Serilog" Version="4.3.0" />
+      <PackageReference Include="StackExchange.Redis" Version="2.9.32" />
     </ItemGroup>
 
 </Project>

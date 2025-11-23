@@ -1,6 +1,7 @@
 using Api.Consumers;
 using Application.Interfaces;
 using CoreLib.HttpLogic;
+using CoreLib.RedisSync;
 using CoreLib.TraceIdLogic;
 using Infrastructure;
 using Infrastructure.HttpClient;
@@ -16,6 +17,8 @@ builder.Services.TryAddTraceId();
 builder.Services.AddScoped<IUserApiClient, UserApiClient>();
 
 //регистрация зависимостей
+builder.Services.AddRedisDistributedSemaphore(
+    builder.Configuration.GetConnectionString("Redis"));
 builder.Services.AddDataAccessLayer(builder.Configuration);
 builder.Services.AddBusinessLogic();
 

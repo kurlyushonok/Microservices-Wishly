@@ -2,48 +2,56 @@
 using Dal.Interfaces;
 using Dal.Entities;
 using Logic.Interfaces;
+using CoreLib.DistributedLockLogic;
 
 namespace Logic.Services;
 
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IDistributedSemaphoreFactory _semaphoreFactory;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IDistributedSemaphoreFactory semaphoreFactory)
     {
         _userRepository = userRepository;
+        _semaphoreFactory = semaphoreFactory;
     }
     
     public async Task<UserResponseDto> RegisterAsync(UserRegisterDto registerDto)
     {
-        if (string.IsNullOrWhiteSpace(registerDto.Username) ||
-            registerDto.Username.Length < 3 || registerDto.Username.Length > 50)
-            throw new ArgumentException("The name must be between 3 and 50 characters long");
-        
-        if (string.IsNullOrWhiteSpace(registerDto.Password) ||
-            registerDto.Password.Length < 8 || registerDto.Password.Length > 50)
-            throw new ArgumentException("The password must be between 8 and 50 characters long");
+        var semaphore = _semaphoreFactory.Create($"user_registration_{registerDto.Username}", 1);
 
-        if (registerDto.Password != registerDto.ConfirmPassword)
-            throw new ArgumentException("Passwords do not match");
-
-        if (await _userRepository.ExistsUsernameAsync(registerDto.Username))
-            throw new InvalidOperationException("Username already exists");
-
-        var user = new User
+        await using (await semaphore.AcquireAsync(TimeSpan.FromSeconds(30)))
         {
-            Id = Guid.NewGuid(),
-            Username = registerDto.Username,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
-        };
+            if (string.IsNullOrWhiteSpace(registerDto.Username) ||
+                registerDto.Username.Length < 3 || registerDto.Username.Length > 50)
+                throw new ArgumentException("The name must be between 3 and 50 characters long");
+        
+            if (string.IsNullOrWhiteSpace(registerDto.Password) ||
+                registerDto.Password.Length < 8 || registerDto.Password.Length > 50)
+                throw new ArgumentException("The password must be between 8 and 50 characters long");
 
-        await _userRepository.AddAsync(user);
+            if (registerDto.Password != registerDto.ConfirmPassword)
+                throw new ArgumentException("Passwords do not match");
 
-        return new UserResponseDto
+            if (await _userRepository.ExistsUsernameAsync(registerDto.Username))
+                throw new InvalidOperationException("Username already exists");
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Username = registerDto.Username,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
+            };
+
+            await _userRepository.AddAsync(user);
+
+            return new UserResponseDto
             {
                 Id = user.Id,
                 Username = user.Username
             };
+        }
     }
 
     public async Task<UserResponseDto> AuthenticateAsync(UserAuthDto authDto)
@@ -86,20 +94,25 @@ public class UserService : IUserService
 
     public async Task<UserResponseDto> UpdateAsync(Guid id, UserUpdateDto updateDto)
     {
-        var user = await _userRepository.GetByIdAsync(id);
-        if (user == null)
-            throw new ArgumentException("User not found");
+        var semaphore = _semaphoreFactory.Create($"user_update_{id}", 1);
 
-        if (UsernameUpdateAsync(user, updateDto).Result || PasswordUpdateAsync(user, updateDto))
+        await using (await semaphore.AcquireAsync(TimeSpan.FromSeconds(30)))
         {
-            await _userRepository.UpdateAsync(user);
-        }
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+                throw new ArgumentException("User not found");
+
+            if (UsernameUpdateAsync(user, updateDto).Result || PasswordUpdateAsync(user, updateDto))
+            {
+                await _userRepository.UpdateAsync(user);
+            }
         
-        return new UserResponseDto
-        {
-            Id = user.Id,
-            Username = user.Username,
-        };
+            return new UserResponseDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+            };
+        }
     }
 
     private async Task<bool> UsernameUpdateAsync(User user, UserUpdateDto updateDto)
@@ -136,7 +149,11 @@ public class UserService : IUserService
 
     public async Task DeleteAsync(Guid id)
     {
-        await _userRepository.DeleteAsync(id);
+        var semaphore = _semaphoreFactory.Create($"user_delete_{id}", 1);
+        await using (await semaphore.AcquireAsync(TimeSpan.FromSeconds(30)))
+        {
+            await _userRepository.DeleteAsync(id);
+        }
     }
 
     public async Task<bool> UsernameExistsAsync(string username)
